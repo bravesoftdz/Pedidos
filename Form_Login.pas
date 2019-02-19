@@ -64,7 +64,7 @@ implementation
 
 {$R *.fmx}
 
-uses Form_Principal;
+uses Form_Principal, ClientModuleUnit1;
 
 procedure TFrm_Login.FormCreate(Sender: TObject);
 begin
@@ -82,8 +82,13 @@ end;
 
 procedure TFrm_Login.Label2Click(Sender: TObject);
 begin
- Application.CreateForm(TFrm_Principal,Frm_Principal);
- Frm_Principal.show;
+ if not ClientModule1.MetodosClient.ValidaLogin(Edit1.Text,edtSenha.Text) then
+  lblRodape.Text:= 'Email ou senha inválidos'
+ else
+ begin
+  Application.CreateForm(TFrm_Principal,Frm_Principal);
+  Frm_Principal.show;
+ end;
 end;
 
 procedure TFrm_Login.lblRodapeClick(Sender: TObject);
