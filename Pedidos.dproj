@@ -349,6 +349,11 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
+        <DCCReference Include="Form_Mensagem.pas">
+            <Form>Frm_Mensagem</Form>
+            <FormType>fmx</FormType>
+        </DCCReference>
+        <DCCReference Include="Global.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

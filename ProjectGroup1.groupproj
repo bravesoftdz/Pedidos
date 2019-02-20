@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{A8B8658E-B5BB-439B-B5F1-DFDB2A009025}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Pedidos.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\Testes\RestServer\SERV.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="Pedidos">
+        <MSBuild Projects="Pedidos.dproj"/>
+    </Target>
+    <Target Name="Pedidos:Clean">
+        <MSBuild Projects="Pedidos.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Pedidos:Make">
+        <MSBuild Projects="Pedidos.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="SERV">
+        <MSBuild Projects="..\Testes\RestServer\SERV.dproj"/>
+    </Target>
+    <Target Name="SERV:Clean">
+        <MSBuild Projects="..\Testes\RestServer\SERV.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SERV:Make">
+        <MSBuild Projects="..\Testes\RestServer\SERV.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="Pedidos;SERV"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="Pedidos:Clean;SERV:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="Pedidos:Make;SERV:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

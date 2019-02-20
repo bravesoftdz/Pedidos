@@ -7,7 +7,11 @@ uses
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.Layouts,
   FMX.Objects, FMX.Controls.Presentation, FMX.StdCtrls, FMX.Edit,
   FMX.ListView.Types, FMX.ListView.Appearances, FMX.ListView.Adapters.Base,
-  FMX.ListView;
+  FMX.ListView, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, System.Rtti,
+  System.Bindings.Outputs, Fmx.Bind.Editors, Data.Bind.EngExt,
+  Fmx.Bind.DBEngExt, Data.Bind.Components, Data.Bind.DBScope;
 
 type
   TFrm_Principal = class(TForm)
@@ -35,6 +39,11 @@ type
     lvPedido: TListView;
     toolbar: TLabel;
     Image1: TImage;
+    FDMemTable1: TFDMemTable;
+    FDMemTable1Foto: TBlobField;
+    BindSourceDB1: TBindSourceDB;
+    BindingsList1: TBindingsList;
+    LinkFillControlToField1: TLinkFillControlToField;
     procedure ImgPedidoClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ImgClienteClick(Sender: TObject);
@@ -52,13 +61,23 @@ var
 
 implementation
 
+uses
+  Data.FireDACJSONReflect, ClientModuleUnit1;
+
 {$R *.fmx}
 
 { TFrm_Principal }
 
 procedure TFrm_Principal.FormShow(Sender: TObject);
+var
+  Ld: TFDJSONDataSets;
 begin
  SelecionaTab(1);
+
+  FDMemTable1.Active := false;
+  Ld := ClientModule1.MetodosClient.GetItens();
+  FDMemTable1.AppendData(TFDJSONDataSetsReader.GetListValue(Ld, 0));
+  FDMemTable1.Open;
 end;
 
 procedure TFrm_Principal.ImgClienteClick(Sender: TObject);
